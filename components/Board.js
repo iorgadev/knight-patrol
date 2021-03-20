@@ -47,7 +47,16 @@ const Board = () => {
   let moves = [-6, -15, -17, -10, 6, 15, 17, 10];
 
   const clicked = (pos) => {
-    console.log(canMove(pos));
+    if (player && canMove(pos)) {
+      let _board = board;
+      _board[player].active = false;
+      _board[pos].active = true;
+      // setBoard(_board);
+      setPlayer(pos);
+      setBoard(_board);
+      // console.log(_board);
+      console.log(canMove(pos));
+    }
   };
 
   const canMove = (pos) => {
@@ -72,7 +81,7 @@ const Board = () => {
         key={pos}
         className={
           styles.tile +
-          ` ${isSelected(pos) ? styles["selected"] : ` `}
+          ` 
             ${canMove(pos) ? styles["can-move"] : ` `}
             ${isLightSquare(pos) ? styles["tile-light"] : styles["tile-dark"]}`
         }
