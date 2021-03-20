@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import styles from "../styles/Board.module.css";
 // import knight from "../public/knight.svg";
 
-const Board = ({ scoreChange }) => {
-  const [selected, setSelected] = useState(null);
-  const [possibleMoves, setPossibleMoves] = useState([]);
-  const [board, setBoard] = useState([]);
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max)) + 1;
+}
 
-  // const [state, setstate] = useState(initialState)
-  const [player, setPlayer] = useState(5);
-  // const [score, setScore] = useState(0);
+const Board = ({ scoreChange }) => {
+  const [board, setBoard] = useState([]);
+  const [player, setPlayer] = useState(getRandomInt(64));
 
   useEffect(() => {
     setBoard(createBoard());
@@ -20,10 +19,10 @@ const Board = ({ scoreChange }) => {
   }, [board]);
 
   //create board
-  const createBoard = (playerPos = 0) => {
+  const createBoard = () => {
     let _board = [];
     let cur = 0;
-    setPlayer(5);
+    // setPlayer(5);
 
     for (let file = 0; file < 8; file++) {
       for (let rank = 0; rank < 8; rank++) {
@@ -39,7 +38,6 @@ const Board = ({ scoreChange }) => {
     if (player) {
       let _board = board;
       for (let i in board) {
-        // console.log(i);
       }
     }
   };
@@ -49,30 +47,25 @@ const Board = ({ scoreChange }) => {
   let moves = [-6, -15, -17, -10, 6, 15, 17, 10];
 
   const clicked = (pos) => {
-    if (player && canMove(pos)) {
+    if (canMove(pos)) {
       let _board = board;
       _board[player].active = false;
       _board[pos].active = true;
       _board[pos].visited = true;
       setPlayer(pos);
       setBoard(_board);
-      // setScore(score + 1);
       scoreChange(1);
-      // console.log(_board);
-      // console.log(score);
-      // console.log(canMove(pos));
-      console.log(board[pos]);
     }
   };
 
   const canMove = (pos) => {
     let moveable = false;
     let movePos;
-    // console.log(player);
+
     let xy = getXY(player);
     for (let i = 0; i < 8; i++) {
       movePos = player + moves[i];
-      // newBounds = getXY(pos);
+
       if (
         movePos == pos &&
         validBounds({ x: xy.x + h[i], y: xy.y + v[i] }) &&
@@ -84,15 +77,23 @@ const Board = ({ scoreChange }) => {
     return moveable;
   };
 
+  let lightTiles = [1, 3, 5];
+  let darkTiles = [2, 6, 7];
+
   const drawSquare = (pos) => {
+    // console.log(board[pos].tile);
     return (
       <div
         id={pos}
         key={pos}
+        style={{
+          backgroundImage: `url('./tiles/floor_${board[pos].tile}.png')`,
+        }}
         className={
           styles.tile +
           ` flex items-center justify-center
             ${canMove(pos) ? styles["can-move"] : ` `}
+            ${board[pos].visited ? styles["visited"] : ` `}
             ${isLightSquare(pos) ? styles["tile-light"] : styles["tile-dark"]}`
         }
         onClick={(e) => clicked(pos)}
@@ -108,20 +109,23 @@ const Board = ({ scoreChange }) => {
   };
 
   let square = (pos) => {
-    // console.log(playerPos);
-    // console.log(pos == playerPos + 1 ? pos : "");
+    let lightTile = lightTiles[getRandomInt(3) - 1];
+    let darkTile = darkTiles[getRandomInt(3) - 1];
+    console.log(lightTile);
     return {
       x: getXY(pos).x,
       y: getXY(pos).y,
       pos: pos,
       light: isLightSquare(pos),
-      selected: pos == player,
-      visited: pos == player,
+      selected: pos - 1 == player,
+      visited: pos - 1 == player,
       active: pos == player + 1,
       canMove: false,
+      tile: isLightSquare(pos) ? darkTile : lightTile,
     };
   };
 
+  //turn a 1-64 position into X,Y coords
   const getXY = (i) => {
     return {
       x: i % 8,
@@ -129,13 +133,15 @@ const Board = ({ scoreChange }) => {
     };
   };
 
-  //needs fix for board object
+  //get Valid Bounds for possible moves
   const validBounds = ({ x, y }) => {
     return x >= 0 && x <= 7 && y >= 0 && y <= 7;
-    // return pos >= 0 && pos <= 63;
   };
 
+  //for checkered pattern of a chessboard
   const isLightSquare = (pos) => getXY(pos).x % 2 == getXY(pos).y % 2;
+
+  //if current square is selected by user
   const isSelected = (pos) => board[pos].selected;
 
   return (

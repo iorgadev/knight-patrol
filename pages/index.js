@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex items-center justify-between w-full h-screen pr-10 space-y-2 bg-gray-900">
+      <div className="flex items-center justify-between w-full h-screen space-y-2 bg-gray-900 px-60">
         {/* make the board */}
         <div className="flex items-center justify-center w-full">
           <div className="w-auto bg-gray-500">
@@ -21,14 +21,14 @@ export default function Home() {
         </div>
 
         {/* stats */}
-        <div className="flex-none bg-gray-700 w-60">
+        <div className="flex-none bg-gray-700 border-4 border-gray-600 w-60">
           <div className="flex flex-col px-5 py-5 space-y-2">
             <span className="text-lg font-bold text-gray-300">
               Score: {score}
             </span>
             <button className="p-3 text-white border">Start New Game</button>
-            <button className="p-3 text-white border">Button</button>
-            <button className="p-3 text-white border">Button</button>
+            <button className="p-3 text-white border">Highscore</button>
+            <button className="p-3 text-white border">Settings</button>
           </div>
         </div>
       </div>
