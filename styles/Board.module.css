@@ -1,17 +1,22 @@
 .board {
-  @apply grid grid-cols-8 gap-0 w-full;
+  @apply grid grid-cols-8 gap-0 w-auto;
 }
 
 .tile {
-  @apply w-24 h-24 border-4 relative hover:border-blue-900;
+  image-rendering: pixelated;
+  @apply w-24 h-24 border-0 relative hover:border-blue-900 bg-cover;
 }
 
 .tile-light {
-  @apply bg-yellow-200;
+  background-blend-mode: overlay;
+  background-image: url("../public/tiles/floor_1.png");
+  @apply bg-gray-500;
 }
 
 .tile-dark {
-  @apply bg-yellow-700;
+  background-blend-mode: overlay;
+  background-image: url("../public/tiles/floor_2.png");
+  @apply bg-gray-700;
 }
 
 .selected {
@@ -19,13 +24,14 @@
 }
 
 .can-move {
-  @apply border-purple-800;
+  @apply bg-purple-900;
 }
 
 .player {
-  @apply w-full h-full p-2;
+  image-rendering: pixelated;
+  @apply w-[48px] h-[84px];
 }
 
 .num {
-  @apply text-xs;
+  @apply text-xs text-gray-100;
 }

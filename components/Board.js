@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import styles from "../styles/Board.module.css";
 // import knight from "../public/knight.svg";
 
-const Board = () => {
+const Board = ({ scoreChange }) => {
   const [selected, setSelected] = useState(null);
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [board, setBoard] = useState([]);
 
   // const [state, setstate] = useState(initialState)
   const [player, setPlayer] = useState(5);
-  const [score, setScore] = useState(0);
+  // const [score, setScore] = useState(0);
 
   useEffect(() => {
     setBoard(createBoard());
@@ -19,6 +19,7 @@ const Board = () => {
     // console.log(player);
   }, [board]);
 
+  //create board
   const createBoard = (playerPos = 0) => {
     let _board = [];
     let cur = 0;
@@ -33,6 +34,7 @@ const Board = () => {
     return _board;
   };
 
+  //update board
   const updateBoard = () => {
     if (player) {
       let _board = board;
@@ -51,11 +53,15 @@ const Board = () => {
       let _board = board;
       _board[player].active = false;
       _board[pos].active = true;
-      // setBoard(_board);
+      _board[pos].visited = true;
       setPlayer(pos);
       setBoard(_board);
+      // setScore(score + 1);
+      scoreChange(1);
       // console.log(_board);
-      console.log(canMove(pos));
+      // console.log(score);
+      // console.log(canMove(pos));
+      console.log(board[pos]);
     }
   };
 
@@ -67,7 +73,11 @@ const Board = () => {
     for (let i = 0; i < 8; i++) {
       movePos = player + moves[i];
       // newBounds = getXY(pos);
-      if (movePos == pos && validBounds({ x: xy.x + h[i], y: xy.y + v[i] })) {
+      if (
+        movePos == pos &&
+        validBounds({ x: xy.x + h[i], y: xy.y + v[i] }) &&
+        !board[pos].visited
+      ) {
         moveable = true;
       }
     }
@@ -81,16 +91,17 @@ const Board = () => {
         key={pos}
         className={
           styles.tile +
-          ` 
+          ` flex items-center justify-center
             ${canMove(pos) ? styles["can-move"] : ` `}
             ${isLightSquare(pos) ? styles["tile-light"] : styles["tile-dark"]}`
         }
         onClick={(e) => clicked(pos)}
       >
         {board[pos].active ? (
-          <img className={styles.player} src="./knight.svg" />
+          <img className={styles.player} src="./knight.png" />
         ) : (
-          <h1 className={styles.num}>{pos}</h1>
+          // <h1 className={styles.num}>{pos}</h1>
+          ""
         )}
       </div>
     );
@@ -105,7 +116,7 @@ const Board = () => {
       pos: pos,
       light: isLightSquare(pos),
       selected: pos == player,
-      visited: false,
+      visited: pos == player,
       active: pos == player + 1,
       canMove: false,
     };
