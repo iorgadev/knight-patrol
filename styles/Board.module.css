@@ -1,0 +1,31 @@
+.board {
+  @apply grid grid-cols-8 gap-0 w-full;
+}
+
+.tile {
+  @apply w-24 h-24 border-4 relative hover:border-blue-900;
+}
+
+.tile-light {
+  @apply bg-yellow-200;
+}
+
+.tile-dark {
+  @apply bg-yellow-700;
+}
+
+.selected {
+  @apply border-red-900;
+}
+
+.can-move {
+  @apply border-purple-800;
+}
+
+.player {
+  @apply w-full h-full p-2;
+}
+
+.num {
+  @apply text-xs;
+}
