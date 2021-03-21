@@ -62,8 +62,8 @@ export default function Home() {
       <div className="main">
         <div className="flex flex-grow space-x-10">
           {/* make the board */}
-          <div className="flex items-center justify-center pt-10">
-            <div className="p-20 board-container">
+          <div className="flex items-center justify-center">
+            <div className="md:p-6 2xl:p-20 board-container">
               <Board
                 scoreChange={updateScore}
                 currentGame={currentGame}
