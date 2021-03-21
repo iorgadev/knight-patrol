@@ -20,32 +20,18 @@ const Board = ({ scoreChange }) => {
     setBoard(createBoard());
   }, []);
 
-  useEffect(() => {
-    // console.log(player);
-  }, [board]);
-
   //create board
   const createBoard = () => {
     let _board = [];
-    let cur = 0;
-    // setPlayer(5);
+    let curPos = 0;
 
     for (let file = 0; file < 8; file++) {
       for (let rank = 0; rank < 8; rank++) {
-        _board[cur++] = square(cur);
+        _board[curPos++] = square(curPos);
       }
     }
 
     return _board;
-  };
-
-  //update board
-  const updateBoard = () => {
-    if (player) {
-      let _board = board;
-      for (let i in board) {
-      }
-    }
   };
 
   const clicked = async (pos) => {
@@ -77,7 +63,6 @@ const Board = ({ scoreChange }) => {
               //register the player move
               if (y == Math.abs(movePos.yMove) && !finalDelay) {
                 finalDelay = true;
-                console.log(currentDelay);
                 sleep(delay).then(() => {
                   setJustMoved(true);
                   _board[player].active = false;
@@ -90,11 +75,11 @@ const Board = ({ scoreChange }) => {
                     setJustMoved(false);
                   });
                 });
-              }
+              } //end setting player movement
             });
-          }
+          } //end y loop
         });
-      }
+      } //end x loop
     }
   };
 
@@ -128,7 +113,6 @@ const Board = ({ scoreChange }) => {
   let darkTiles = [2, 6, 7];
 
   const drawSquare = (pos) => {
-    // console.log(board[pos].tile);
     return (
       <div
         id={pos}
@@ -158,7 +142,6 @@ const Board = ({ scoreChange }) => {
   let square = (pos) => {
     let lightTile = lightTiles[getRandomInt(3) - 1];
     let darkTile = darkTiles[getRandomInt(3) - 1];
-    // console.log(lightTile);
     return {
       x: getXY(pos).x,
       y: getXY(pos).y,

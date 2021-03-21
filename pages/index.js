@@ -11,8 +11,6 @@ export default function Home() {
   };
 
   function getHighScore() {
-    // let hs = localStorage.getItem("highscore");
-    // console.log(hs);
     return localStorage.getItem("highscore")
       ? localStorage.getItem("highscore")
       : 0;
@@ -21,7 +19,6 @@ export default function Home() {
   //check ls for highscore
   useEffect(() => {
     let currentHighScore = getHighScore();
-    // console.log(currentHighScore);
     //if exists, is ls hs > current score, set it
     if (score > currentHighScore) {
       localStorage.setItem("highscore", score);

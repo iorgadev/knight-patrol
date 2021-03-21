@@ -37,7 +37,7 @@
 }
 
 .menu {
-  @apply flex;
+  @apply flex transition-all duration-300 transform;
 }
 .menu-1 {
   image-rendering: pixelated;
@@ -51,8 +51,11 @@
   transition-all transform duration-300 translate-x-0;
 }
 
-.settings-menu {
+.slide-menu {
   @apply -translate-x-80;
+}
+.about-menu {
+  @apply -translate-x-0;
 }
 
 .banner {
