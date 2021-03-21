@@ -77,10 +77,10 @@
   @apply w-10 h-10 transition-all duration-100 hover:w-14 hover:h-14;
 }
 .button > .name {
-  @apply text-4xl transition-all duration-100;
+  @apply text-4xl transition-all duration-100 text-[#f4d29c];
 }
 .button:hover > .name {
-  @apply text-[#f4d29c];
+  @apply text-[#fbb442];
 }
 
 .button:hover > .icon {
@@ -92,4 +92,8 @@
 }
 .new-game:hover {
   text-shadow: 2px 2px 0px #ff414e;
+}
+
+.go-back {
+  @apply text-6xl text-[#fbb442] transition-all duration-100 whitespace-nowrap;
 }

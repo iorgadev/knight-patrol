@@ -52,63 +52,49 @@ const Board = ({ scoreChange }) => {
     let movePos = canMove(pos);
     if (movePos.moveable) {
       let _board = board;
-      // _board[player].active = false;
-      // _board[pos].active = true;
-      // _board[pos].visited = true;
-      // setPlayer(pos);
-      // setBoard(_board);
-      // scoreChange(1);
 
-      //add board shake animation on player move
-      // setJustMoved(true);
-      // for (let x = 0; x <= Math.abs(movePos.xMove); x++) {
-      //   // console.log(player);
-      //   let point = {
-      //     x: player + x * Math.sign(movePos.xMove),
-      //     y: getXY(player).y + 1,
-      //   };
-      // }
-
+      //*bit* of a mess here, need to revisit.. but hey, it works!
       let playerIcon = document.getElementById("player");
       let delay = 200;
       let currentDelay = 0;
+      let finalDelay = false;
+      //move player on x axis
       for (let x = 1; x <= Math.abs(movePos.xMove); x++) {
         currentDelay += delay;
         sleep(currentDelay).then(() => {
           playerIcon.style.transform = `translateX(${
             x * 96 * Math.sign(movePos.xMove)
-          }px)`;
+          }px) rotate(${10 * Math.sign(movePos.xMove)}deg)`;
 
+          //move player on y axis
           for (let y = 1; y <= Math.abs(movePos.yMove); y++) {
-            // currentDelay += delay;
+            currentDelay += delay;
             sleep(currentDelay).then(() => {
               playerIcon.style.transform = `translate(${
                 movePos.xMove * 96
               }px, ${y * 96 * Math.sign(movePos.yMove)}px)`;
-              console.log("should move y");
+
+              //register the player move
+              if (y == Math.abs(movePos.yMove) && !finalDelay) {
+                finalDelay = true;
+                console.log(currentDelay);
+                sleep(delay).then(() => {
+                  setJustMoved(true);
+                  _board[player].active = false;
+                  _board[pos].active = true;
+                  _board[pos].visited = true;
+                  setPlayer(pos);
+                  setBoard(_board);
+                  scoreChange(1);
+                  sleep(delay).then(() => {
+                    setJustMoved(false);
+                  });
+                });
+              }
             });
           }
         });
       }
-
-      // sleep(800).then(() => {
-      //   playerIcon.style.transform = `translateY(${
-      //     3 * 96 * Math.sign(movePos.xMove)
-      //   }px)`;
-      // });
-
-      sleep(4 * delay).then(() => {
-        setJustMoved(true);
-        _board[player].active = false;
-        _board[pos].active = true;
-        _board[pos].visited = true;
-        setPlayer(pos);
-        setBoard(_board);
-        scoreChange(1);
-        sleep(delay).then(() => {
-          setJustMoved(false);
-        });
-      });
     }
   };
 

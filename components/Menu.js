@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 const Menu = () => {
+  const [menuOption, setMenuOption] = useState(0);
   const [settingsMenu, setSettingsMenu] = useState(false);
 
   function toggleSettings() {
+    setMenuOption(1);
     setSettingsMenu(!settingsMenu);
   }
 
@@ -29,7 +31,7 @@ const Menu = () => {
                 <span className="name">Settings</span>
               </button>
               <button className="button" onClick={toggleSettings}>
-                <img className="icon" src="./settings.png" />
+                <img className="icon" src="./icons/about.png" />
                 <span className="name">About Me</span>
               </button>
             </div>
@@ -39,30 +41,26 @@ const Menu = () => {
             className={settingsMenu ? `menu-1 settings-menu` : `menu-1`}
           >
             <div className="flex flex-col px-2 py-5 space-y-1">
-              <button className="new-game button">
+              <button className="go-back button" onClick={toggleSettings}>
                 <img className="icon" src="./player.png" />
-                <span className="new-game">Go Back</span>
+                <span className="">Back</span>
               </button>
               <button className="button">
-                <img className="icon" src="./highscore.png" />
+                <img className="icon" src="./icons/hard.png" />
                 <div className="flex flex-col">
                   <span className="name">Hard Mode</span>
-                  <span className="text-xs text-white">
+                  <span className="text-sm text-white">
                     hide possible moves
                   </span>
                 </div>
               </button>
-              <button className="button" onClick={toggleSettings}>
-                <img className="icon" src="./settings.png" />
+              <button className="button">
+                <img className="icon" src="./icons/time.png" />
                 <span className="name">Hide Timer</span>
               </button>
-              <button className="button" onClick={toggleSettings}>
-                <img className="icon" src="./settings.png" />
-                <span className="name">Starting Pos</span>
-              </button>
-              <button className="button" onClick={toggleSettings}>
-                <img className="icon" src="./settings.png" />
-                <span className="name">Starting Pos</span>
+              <button className="button">
+                <img className="icon" src="./icons/startpos.png" />
+                <span className="name">Random Start</span>
               </button>
             </div>
           </div>
