@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Head from "next/head";
 import Board from "../components/Board";
 import Menu from "../components/Menu";
 import styles from "../styles/Home.module.css";
@@ -59,6 +60,16 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Knight Patrol Game</title>
+        <meta
+          name="description"
+          content="Knight Patrol is a chess game based on Knight's Tour. Made in React, by Adrian Iorga."
+        />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="author" content="Adrian Iorga" />
+        <meta property="og:image" content="/knight-patrol-thumb.png" />
+      </Head>
       <div className="main">
         <div className="flex flex-grow space-x-10">
           {/* make the board */}

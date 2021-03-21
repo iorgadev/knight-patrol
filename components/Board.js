@@ -16,6 +16,7 @@ const Board = ({ scoreChange, currentGame, options }) => {
   const [player, setPlayer] = useState(-1);
   const [justMoved, setJustMoved] = useState(false);
   const [gameID, setGameID] = useState(0);
+  const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
     setGameID(1);
@@ -50,6 +51,8 @@ const Board = ({ scoreChange, currentGame, options }) => {
   };
 
   const clicked = async (pos) => {
+    if (isMoving) return;
+    setIsMoving(true);
     let movePos = canMove(pos);
     if (movePos.moveable) {
       let _board = board;
@@ -88,6 +91,7 @@ const Board = ({ scoreChange, currentGame, options }) => {
                   scoreChange(1);
                   sleep(delay).then(() => {
                     setJustMoved(false);
+                    setIsMoving(false);
                   });
                 });
               } //end setting player movement
