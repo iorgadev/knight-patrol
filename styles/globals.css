@@ -29,7 +29,7 @@
   background-image: url("../public/tiles/wall_mid.png");
   background-size: 10%;
   background-blend-mode: overlay;
-  box-shadow: inset 0 0 100px 55px #000000;
+  box-shadow: inset 0 0 100px 40px #000000;
   @apply relative w-auto h-auto p-10 lg:p-12;
 }
 
