@@ -139,7 +139,7 @@ const Board = ({ scoreChange, currentGame, options }) => {
           styles.tile +
           ` flex items-center justify-center
             ${
-              canMove(pos).moveable && options.hardMode
+              canMove(pos).moveable && !options.hardMode
                 ? styles["can-move"]
                 : ` `
             }

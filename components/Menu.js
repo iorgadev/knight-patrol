@@ -10,12 +10,14 @@ const getHardMode = () => {
   return parseInt(localStorage.getItem("hardmode"));
 };
 
-const Menu = ({ newGame, updateSettings, highScore }) => {
+const Menu = ({ newGame, updateSettings, highScore, settings }) => {
   const [menuOption, setMenuOption] = useState(0);
   const [hardMode, setHardMode] = useState(0);
 
   const toggleHardMode = () => {
-    let hard = getHardMode();
+    // let hard = getHardMode();
+    let hard = settings.hardMode;
+    console.log("settings hard: ", settings.hardMode);
     if (hard) {
       localStorage.setItem("hardmode", "0");
       setHardMode(0);
@@ -85,14 +87,14 @@ const Menu = ({ newGame, updateSettings, highScore }) => {
               </button>
               <span className="text-5xl text-white uppercase">Settings</span>
               <button
-                className={`button ${!hardMode ? `` : `disabled`}`}
+                className={`button ${settings.hardMode ? `` : `disabled`}`}
                 onClick={toggleHardMode}
               >
                 <img className="icon" src="./icons/hard.png" />
                 <div className="flex flex-col items-start">
                   <span className="name">Hard Mode</span>
                   <span className="text-sm text-white">
-                    [{hardMode ? `❌` : `✔️`}] hide possible moves
+                    [{settings.hardMode ? `✔️` : `❌`}] hide possible moves
                   </span>
                 </div>
               </button>

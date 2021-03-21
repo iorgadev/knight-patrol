@@ -24,7 +24,7 @@ export default function Home() {
   useEffect(() => {
     //initial settings
     if (localStorage.getItem("hardmode") === null) {
-      localStorage.setItem("hardmode", "1");
+      localStorage.setItem("hardmode", "0");
       console.log("initial hard mode set off");
     }
     setSettings({ hardMode: getHardMode() });
@@ -90,6 +90,7 @@ export default function Home() {
               newGame={newGame}
               updateSettings={updateSettings}
               highScore={highScore}
+              settings={settings}
             />
           </div>
         </div>
