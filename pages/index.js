@@ -68,7 +68,7 @@ export default function Home() {
         />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="author" content="Adrian Iorga" />
-        <meta property="og:image" content="/knight-patrol-thumb.png" />
+        <meta property="og:image" content="/knight-patrol-thumb2.png" />
       </Head>
       <div className="main">
         <div className="flex flex-grow space-x-10">
