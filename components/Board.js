@@ -6,9 +6,15 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max)) + 1;
 }
 
+// sleep time expects milliseconds
+function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 const Board = ({ scoreChange }) => {
   const [board, setBoard] = useState([]);
-  const [player, setPlayer] = useState(getRandomInt(64));
+  const [player, setPlayer] = useState(getRandomInt(63));
+  const [justMoved, setJustMoved] = useState(false);
 
   useEffect(() => {
     setBoard(createBoard());
@@ -42,25 +48,78 @@ const Board = ({ scoreChange }) => {
     }
   };
 
-  let h = [2, 1, -1, -2, -2, -1, 1, 2];
-  let v = [-1, -2, -2, -1, 1, 2, 2, 1];
-  let moves = [-6, -15, -17, -10, 6, 15, 17, 10];
-
-  const clicked = (pos) => {
-    if (canMove(pos)) {
+  const clicked = async (pos) => {
+    let movePos = canMove(pos);
+    if (movePos.moveable) {
       let _board = board;
-      _board[player].active = false;
-      _board[pos].active = true;
-      _board[pos].visited = true;
-      setPlayer(pos);
-      setBoard(_board);
-      scoreChange(1);
+      // _board[player].active = false;
+      // _board[pos].active = true;
+      // _board[pos].visited = true;
+      // setPlayer(pos);
+      // setBoard(_board);
+      // scoreChange(1);
+
+      //add board shake animation on player move
+      // setJustMoved(true);
+      // for (let x = 0; x <= Math.abs(movePos.xMove); x++) {
+      //   // console.log(player);
+      //   let point = {
+      //     x: player + x * Math.sign(movePos.xMove),
+      //     y: getXY(player).y + 1,
+      //   };
+      // }
+
+      let playerIcon = document.getElementById("player");
+      let delay = 200;
+      let currentDelay = 0;
+      for (let x = 1; x <= Math.abs(movePos.xMove); x++) {
+        currentDelay += delay;
+        sleep(currentDelay).then(() => {
+          playerIcon.style.transform = `translateX(${
+            x * 96 * Math.sign(movePos.xMove)
+          }px)`;
+
+          for (let y = 1; y <= Math.abs(movePos.yMove); y++) {
+            // currentDelay += delay;
+            sleep(currentDelay).then(() => {
+              playerIcon.style.transform = `translate(${
+                movePos.xMove * 96
+              }px, ${y * 96 * Math.sign(movePos.yMove)}px)`;
+              console.log("should move y");
+            });
+          }
+        });
+      }
+
+      // sleep(800).then(() => {
+      //   playerIcon.style.transform = `translateY(${
+      //     3 * 96 * Math.sign(movePos.xMove)
+      //   }px)`;
+      // });
+
+      sleep(4 * delay).then(() => {
+        setJustMoved(true);
+        _board[player].active = false;
+        _board[pos].active = true;
+        _board[pos].visited = true;
+        setPlayer(pos);
+        setBoard(_board);
+        scoreChange(1);
+        sleep(delay).then(() => {
+          setJustMoved(false);
+        });
+      });
     }
   };
 
+  // can move
+  let h = [2, 1, -1, -2, -2, -1, 1, 2];
+  let v = [-1, -2, -2, -1, 1, 2, 2, 1];
+  let moves = [-6, -15, -17, -10, 6, 15, 17, 10];
   const canMove = (pos) => {
     let moveable = false;
     let movePos;
+    let move = { x: 0, y: 0, xAbs: 0, yAbs: 0 };
 
     let xy = getXY(player);
     for (let i = 0; i < 8; i++) {
@@ -72,9 +131,11 @@ const Board = ({ scoreChange }) => {
         !board[pos].visited
       ) {
         moveable = true;
+        move.x = h[i];
+        move.y = v[i];
       }
     }
-    return moveable;
+    return { moveable: moveable, xMove: move.x, yMove: move.y };
   };
 
   let lightTiles = [1, 3, 5];
@@ -92,14 +153,14 @@ const Board = ({ scoreChange }) => {
         className={
           styles.tile +
           ` flex items-center justify-center
-            ${canMove(pos) ? styles["can-move"] : ` `}
+            ${canMove(pos).moveable ? styles["can-move"] : ` `}
             ${board[pos].visited ? styles["visited"] : ` `}
             ${isLightSquare(pos) ? styles["tile-light"] : styles["tile-dark"]}`
         }
         onClick={(e) => clicked(pos)}
       >
-        {board[pos].active ? (
-          <img className={styles.player} src="./player-2.png" />
+        {board[pos].active || board[pos].justMovedThrough ? (
+          <img id="player" className={styles.player} src="./player-2.png" />
         ) : (
           // <h1 className={styles.num}>{pos}</h1>
           ""
@@ -111,7 +172,7 @@ const Board = ({ scoreChange }) => {
   let square = (pos) => {
     let lightTile = lightTiles[getRandomInt(3) - 1];
     let darkTile = darkTiles[getRandomInt(3) - 1];
-    console.log(lightTile);
+    // console.log(lightTile);
     return {
       x: getXY(pos).x,
       y: getXY(pos).y,
@@ -120,7 +181,7 @@ const Board = ({ scoreChange }) => {
       selected: pos - 1 == player,
       visited: pos - 1 == player,
       active: pos == player + 1,
-      canMove: false,
+      justMovedThrough: false,
       tile: isLightSquare(pos) ? darkTile : lightTile,
     };
   };
@@ -131,6 +192,10 @@ const Board = ({ scoreChange }) => {
       x: i % 8,
       y: Math.floor(i / 8),
     };
+  };
+
+  const getPos = ({ x, y }) => {
+    return x + y * 8;
   };
 
   //get Valid Bounds for possible moves
@@ -145,7 +210,10 @@ const Board = ({ scoreChange }) => {
   const isSelected = (pos) => board[pos].selected;
 
   return (
-    <div id="board" className={styles.board}>
+    <div
+      id="board"
+      className={`${styles.board} ${justMoved ? styles.shake : ``}`}
+    >
       {board.map((e, pos) => drawSquare(pos))}
     </div>
   );

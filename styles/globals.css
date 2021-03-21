@@ -5,14 +5,14 @@
 @tailwind utilities;
 
 .logo {
-  @apply relative top-4;
+  @apply relative inline w-28 h-28;
 }
 
 .title {
-  line-height: 10rem;
-  text-shadow: 4px 4px 0px #8b93af;
-  color: #4a5462;
-  @apply text-[12rem]  uppercase mt-5;
+  line-height: 5rem;
+  text-shadow: 4px 4px 0px #b4202a;
+  color: #73172d;
+  @apply text-[9rem]  uppercase;
 }
 
 .main {
@@ -29,30 +29,49 @@
   background-size: 10%;
   background-blend-mode: overlay;
   box-shadow: inset 0 0 100px 55px #000000;
-  @apply relative w-auto h-auto p-16;
+  @apply relative w-auto h-auto p-10 lg:p-12;
+}
+
+.menu-container {
+  @apply flex flex-col items-start overflow-hidden transition-all duration-300 transform w-80;
 }
 
 .menu {
+  @apply flex;
+}
+.menu-1 {
   image-rendering: pixelated;
   background-image: url("../public/tiles/wall_mid.png");
   background-size: 100%;
   background-blend-mode: overlay;
   box-shadow: inset 0 0 25px #0f0f0f, 4px 4px 20px #000000;
-  @apply flex-none font-sans text-3xl bg-[#0f0f0f] w-[21.5rem] border-[1rem] border-[#040405];
+  @apply flex overflow-hidden flex-none
+  font-sans text-3xl w-80
+  bg-[#0f0f0f] border-[1rem] border-[#040405]
+  transition-all transform duration-300 translate-x-0;
+}
+
+.settings-menu {
+  @apply -translate-x-80;
 }
 
 .banner {
   filter: brightness(0.6);
   background-image: url("../public/banner.png");
-  @apply absolute bg-cover w-96 h-96 -left-5 -top-4;
+  @apply absolute bg-cover w-96 h-96 -left-8 -top-6;
 }
 
 .score {
-  @apply text-3xl font-bold text-gray-300;
+  background-image: url("../public/tiles/score.png");
+  /* background-size: 10%; */
+  /* background-size: 150%; */
+  background-blend-mode: overlay;
+  background-color: #74030a;
+  @apply bg-cover px-8 flex justify-between text-center font-bold text-[#fa6a0a] bg-[#242234] border-[1rem] border-[#74030a] w-[22rem] text-7xl border-opacity-80;
 }
 
 .button {
-  @apply relative flex items-center justify-start h-20 px-2 py-3 space-x-4 text-white transition-all duration-300 bg-black bg-opacity-10 hover:bg-opacity-20 hover:bg-[#df3e23];
+  @apply relative flex items-center justify-start h-20 px-3 py-3 space-x-4 text-white transition-all duration-300 bg-black bg-opacity-10 hover:bg-opacity-20;
 }
 .button > .icon {
   @apply w-10 h-10 transition-all duration-100 hover:w-14 hover:h-14;
@@ -60,15 +79,16 @@
 .button > .name {
   @apply text-4xl transition-all duration-100;
 }
-.button:hover > .new-game {
-  @apply text-[4rem];
+.button:hover > .name {
+  @apply text-[#f4d29c];
 }
+
 .button:hover > .icon {
   @apply w-12 h-12;
 }
 .new-game {
   text-shadow: 2px 2px 0px #74030a;
-  @apply text-6xl text-[#b4202a] transition-all duration-100;
+  @apply text-6xl text-[#b4202a] transition-all duration-100 whitespace-nowrap;
 }
 .new-game:hover {
   text-shadow: 2px 2px 0px #ff414e;

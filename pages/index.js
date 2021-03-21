@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Board from "../components/Board";
+import Menu from "../components/Menu";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
   //check ls for highscore
   useEffect(() => {
     let currentHighScore = getHighScore();
-    console.log(currentHighScore);
+    // console.log(currentHighScore);
     //if exists, is ls hs > current score, set it
     if (score > currentHighScore) {
       localStorage.setItem("highscore", score);
@@ -31,42 +32,29 @@ export default function Home() {
   return (
     <>
       <div className="main">
-        <div className="flex justify-center flex-none w-full whitespace-nowrap">
-          <img className="logo" src="./logo-3.png" />
-          <h1 className="title">KNIGHT PATROL</h1>
-        </div>
         <div className="flex flex-grow space-x-10">
           {/* make the board */}
-          <div className="flex items-start justify-center">
+          <div className="flex items-center justify-center pt-10">
             <div className="p-20 board-container">
               <Board scoreChange={updateScore} />
             </div>
           </div>
 
           {/* menu */}
-          <div className="flex flex-col items-start transition-all duration-300 transform w-80">
-            <div className="menu">
-              <div className="flex flex-col px-2 py-5 space-y-5">
-                <span className="score">Score: {score}</span>
-                <button className="new-game button">
-                  <img className="icon" src="./player.png" />
-                  <span className="new-game">New Game</span>
-                </button>
-                <button className="button">
-                  <img className="icon" src="./highscore.png" />
-                  <span className="name">Highscore</span>
-                </button>
-                <button className="button">
-                  <img className="icon" src="./settings.png" />
-                  <span className="name">Settings</span>
-                </button>
-              </div>
-
-              {/* banner */}
+          <div className="flex flex-col items-center justify-center space-y-2">
+            <div className="flex flex-col items-center justify-center flex-none w-full mb-10 whitespace-nowrap">
+              <h1 className="title">
+                <span className="mr-2 text-8xl">KNIGHT</span>
+                <img className="logo" src="./logo-3.png" />
+                <br />
+                PATROL
+              </h1>
             </div>
-            <div className="relative">
-              <div className="banner"></div>
+            <div className="score">
+              <span>Score:</span>
+              <span>{score}</span>
             </div>
+            <Menu />
           </div>
         </div>
       </div>
