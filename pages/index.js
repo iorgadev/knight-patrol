@@ -7,28 +7,51 @@ export default function Home() {
 
   const updateScore = (s) => {
     setScore(score + s);
-    console.log(score);
   };
+
+  function getHighScore() {
+    // let hs = localStorage.getItem("highscore");
+    // console.log(hs);
+    return localStorage.getItem("highscore")
+      ? localStorage.getItem("highscore")
+      : 0;
+  }
+
+  //check ls for highscore
+  useEffect(() => {
+    let currentHighScore = getHighScore();
+    console.log(currentHighScore);
+    //if exists, is ls hs > current score, set it
+    if (score > currentHighScore) {
+      localStorage.setItem("highscore", score);
+      console.log("New High Score: ", score);
+    }
+  }, [score]);
 
   return (
     <>
-      <div className="flex items-center justify-between w-full h-screen space-y-2 bg-gray-900 px-60">
-        {/* make the board */}
-        <div className="flex items-center justify-center w-full">
-          <div className="w-auto bg-gray-500">
-            <Board scoreChange={updateScore} />
-          </div>
+      <div className="main">
+        <div className="flex-none">
+          <h1 className="title">KNIGHT PATROL</h1>
         </div>
+        <div className="flex flex-grow space-x-10">
+          {/* make the board */}
+          <div className="flex items-start justify-center">
+            <div className="p-20 board-container">
+              <Board scoreChange={updateScore} />
+            </div>
+          </div>
 
-        {/* stats */}
-        <div className="flex-none bg-gray-700 border-4 border-gray-600 w-60">
-          <div className="flex flex-col px-5 py-5 space-y-2">
-            <span className="text-lg font-bold text-gray-300">
-              Score: {score}
-            </span>
-            <button className="p-3 text-white border">Start New Game</button>
-            <button className="p-3 text-white border">Highscore</button>
-            <button className="p-3 text-white border">Settings</button>
+          {/* menu */}
+          <div className="flex items-start transition-all duration-300 transform">
+            <div className="menu">
+              <div className="flex flex-col px-5 py-5 space-y-2">
+                <span className="score">Score: {score}</span>
+                <button className="button">Start New Game</button>
+                <button className="button">Highscore</button>
+                <button className="button">Settings</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
