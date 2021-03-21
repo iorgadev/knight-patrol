@@ -1,4 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 /* ./styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.title {
+  line-height: 9rem;
+  text-shadow: 4px 4px 0px #e100ff;
+  @apply text-[12rem] text-purple-900 uppercase mt-5;
+}
+
+.main {
+  image-rendering: pixelated;
+  background-image: url("../public/tiles/wall_mid.png");
+  background-size: 10%;
+  background-blend-mode: overlay;
+  @apply flex flex-col items-center justify-center w-full h-screen space-y-10 bg-gray-800;
+}
+.board-container {
+  image-rendering: pixelated;
+  background-image: url("../public/tiles/wall_mid.png");
+  background-size: 10%;
+  background-blend-mode: overlay;
+  box-shadow: inset 0 0 100px 55px #000000;
+  @apply w-auto h-auto p-16;
+}
+.board-container > * {
+  animation-name: example;
+  animation-duration: 4s;
+}
+@keyframes example {
+  from {
+    @apply bg-red-500;
+  }
+  to {
+    @apply bg-red-100;
+  }
+}
+
+.menu {
+  image-rendering: pixelated;
+  background-image: url("../public/tiles/wall_mid.png");
+  background-size: 100%;
+  background-blend-mode: overlay;
+  box-shadow: inset 0 0 25px #000000, 4px 4px 20px #000000;
+  @apply flex-none font-sans text-3xl bg-gray-900 w-72;
+}
+
+.score {
+  @apply text-3xl font-bold text-gray-300;
+}
+
+.button {
+  @apply p-3 text-white bg-yellow-900 bg-opacity-75 border-4 border-yellow-900 border-opacity-90;
+}

@@ -23,5 +23,9 @@
   "editor.quickSuggestions": {
     "strings": true
   },
-  "cSpell.ignoreWords": ["component", "newreleases"]
+  "cSpell.ignoreWords": [
+    "component",
+    "highscore",
+    "newreleases"
+  ]
 }

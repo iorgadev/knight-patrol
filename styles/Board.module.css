@@ -1,10 +1,10 @@
 .board {
-  @apply grid grid-cols-8 gap-0 w-auto;
+  @apply grid w-auto grid-cols-8 gap-0 bg-gray-900;
 }
 
 .tile {
   image-rendering: pixelated;
-  @apply w-24 h-24 border-0 relative hover:border-blue-900 bg-cover;
+  @apply relative w-24 h-24 bg-cover border-0 hover:border-blue-900;
 }
 
 .tile-light {
@@ -18,7 +18,7 @@
   background-blend-mode: overlay;
   /* background-image: url("../public/tiles/floor_2.png"); */
   /* background-image: url("../public/tiles/floor_spikes_anim_f0.png"); */
-  @apply bg-gray-700;
+  @apply bg-gray-800;
 }
 
 .selected {
