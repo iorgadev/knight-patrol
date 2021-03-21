@@ -26,7 +26,8 @@
 }
 
 .can-move {
-  @apply bg-purple-900;
+  @apply bg-[#dba463];
+  /* @apply bg-purple-900; */
 }
 
 .visited {
@@ -35,7 +36,8 @@
 
 .player {
   image-rendering: pixelated;
-  @apply w-[48px] h-[84px];
+  /* @apply w-[48px] h-[84px]; */
+  @apply w-full h-full p-3;
 }
 
 .num {

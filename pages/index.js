@@ -31,7 +31,8 @@ export default function Home() {
   return (
     <>
       <div className="main">
-        <div className="flex-none">
+        <div className="flex justify-center flex-none w-full whitespace-nowrap">
+          <img className="logo" src="./logo-3.png" />
           <h1 className="title">KNIGHT PATROL</h1>
         </div>
         <div className="flex flex-grow space-x-10">
@@ -43,14 +44,28 @@ export default function Home() {
           </div>
 
           {/* menu */}
-          <div className="flex items-start transition-all duration-300 transform">
+          <div className="flex flex-col items-start transition-all duration-300 transform w-80">
             <div className="menu">
-              <div className="flex flex-col px-5 py-5 space-y-2">
+              <div className="flex flex-col px-2 py-5 space-y-5">
                 <span className="score">Score: {score}</span>
-                <button className="button">Start New Game</button>
-                <button className="button">Highscore</button>
-                <button className="button">Settings</button>
+                <button className="new-game button">
+                  <img className="icon" src="./player.png" />
+                  <span className="new-game">New Game</span>
+                </button>
+                <button className="button">
+                  <img className="icon" src="./highscore.png" />
+                  <span className="name">Highscore</span>
+                </button>
+                <button className="button">
+                  <img className="icon" src="./settings.png" />
+                  <span className="name">Settings</span>
+                </button>
               </div>
+
+              {/* banner */}
+            </div>
+            <div className="relative">
+              <div className="banner"></div>
             </div>
           </div>
         </div>

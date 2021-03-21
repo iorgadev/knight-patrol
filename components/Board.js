@@ -99,7 +99,7 @@ const Board = ({ scoreChange }) => {
         onClick={(e) => clicked(pos)}
       >
         {board[pos].active ? (
-          <img className={styles.player} src="./knight.png" />
+          <img className={styles.player} src="./player-2.png" />
         ) : (
           // <h1 className={styles.num}>{pos}</h1>
           ""
