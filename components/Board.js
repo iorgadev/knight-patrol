@@ -11,14 +11,29 @@ function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-const Board = ({ scoreChange }) => {
+const Board = ({ scoreChange, currentGame, options }) => {
   const [board, setBoard] = useState([]);
-  const [player, setPlayer] = useState(getRandomInt(63));
+  const [player, setPlayer] = useState(-1);
   const [justMoved, setJustMoved] = useState(false);
+  const [gameID, setGameID] = useState(0);
 
   useEffect(() => {
-    setBoard(createBoard());
+    setGameID(1);
   }, []);
+
+  useEffect(() => {
+    setPlayer(getRandomInt(63));
+  }, [currentGame]);
+
+  useEffect(() => {
+    if (gameID != currentGame) {
+      setGameID(currentGame);
+      scoreChange(0);
+      sleep(10).then(() => {
+        setBoard(createBoard());
+      });
+    }
+  }, [player]);
 
   //create board
   const createBoard = () => {
@@ -123,7 +138,11 @@ const Board = ({ scoreChange }) => {
         className={
           styles.tile +
           ` flex items-center justify-center
-            ${canMove(pos).moveable ? styles["can-move"] : ` `}
+            ${
+              canMove(pos).moveable && options.hardMode
+                ? styles["can-move"]
+                : ` `
+            }
             ${board[pos].visited ? styles["visited"] : ` `}
             ${isLightSquare(pos) ? styles["tile-light"] : styles["tile-dark"]}`
         }
