@@ -71,10 +71,10 @@ export default function Home() {
         <meta property="og:image" content="/knight-patrol-thumb2.png" />
       </Head>
       <div className="main">
-        <div className="flex flex-grow space-x-10">
+        <div className="flex flex-col lg:flex-row lg:space-x-10">
           {/* make the board */}
           <div className="flex items-center justify-center">
-            <div className="md:p-6 lg:p-10 board-container">
+            <div className="md:p-0 lg:p-10 board-container">
               <Board
                 scoreChange={updateScore}
                 currentGame={currentGame}
@@ -84,18 +84,20 @@ export default function Home() {
           </div>
 
           {/* menu */}
-          <div className="flex flex-col items-center justify-center space-y-2">
-            <div className="flex flex-col items-center justify-center flex-none w-full mb-10 whitespace-nowrap">
-              <h1 className="title">
-                <span className="mr-2 text-8xl">KNIGHT</span>
-                <img className="logo" src="./logo-3.png" />
-                <br />
-                PATROL
-              </h1>
-            </div>
-            <div className="score">
-              <span>Score:</span>
-              <span>{score}</span>
+          <div className="flex items-center justify-center space-y-2 lg:flex-col">
+            <div className="flex flex-col">
+              <div className="flex flex-col items-center justify-center flex-none mb-10 lg:w-full whitespace-nowrap">
+                <h1 className="title">
+                  <span className="mr-2 text-6xl lg:text-8xl">KNIGHT</span>
+                  <img className="logo" src="./logo-3.png" />
+                  <br />
+                  PATROL
+                </h1>
+              </div>
+              <div className="score">
+                <span>Score:</span>
+                <span>{score}</span>
+              </div>
             </div>
             <Menu
               newGame={newGame}

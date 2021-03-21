@@ -17,6 +17,7 @@ const Board = ({ scoreChange, currentGame, options }) => {
   const [justMoved, setJustMoved] = useState(false);
   const [gameID, setGameID] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
+  const [possibleMoves, setPossibleMoves] = useState(0);
 
   useEffect(() => {
     setGameID(1);
@@ -125,7 +126,11 @@ const Board = ({ scoreChange, currentGame, options }) => {
         move.y = v[i];
       }
     }
-    return { moveable: moveable, xMove: move.x, yMove: move.y };
+    return {
+      moveable: moveable,
+      xMove: move.x,
+      yMove: move.y,
+    };
   };
 
   let lightTiles = [1, 3, 5];

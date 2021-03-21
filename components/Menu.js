@@ -55,7 +55,7 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
       <div className="menu-container">
         <div className="menu">
           <div id="menu-0" className={menuOption == 0 ? `menu-1` : `menu-1`}>
-            <div className="flex flex-col px-2 py-5 space-y-5">
+            <div className="flex flex-col px-2 space-y-1 lg:py-5 lg:space-y-5">
               <button className="new-game button" onClick={newGame}>
                 <img className="icon" src="./player.png" />
                 <span className="new-game">New Game</span>
@@ -85,7 +85,9 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
                 <img className="icon" src="./icons/altar.png" />
                 <span className="">Back</span>
               </button>
-              <span className="text-5xl text-white uppercase">Settings</span>
+              <span className="hidden text-5xl text-white uppercase lg:flex">
+                Settings
+              </span>
               <button
                 className={`button ${settings.hardMode ? `` : `disabled`}`}
                 onClick={toggleHardMode}
@@ -120,7 +122,7 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
                 <span className="">Back</span>
               </button>
 
-              <div className="w-full h-full space-y-2 ">
+              <div className="w-full space-y-2 ">
                 <div className="flex flex-col items-center justify-center h-full text-5xl text-white uppercase bg-red-900 border-8 border-red-600 border-opacity-20 bg-opacity-30">
                   <span className="text-5xl text-[#b4202a] uppercase">
                     About Me

@@ -36,7 +36,7 @@
 
 .tile {
   image-rendering: pixelated;
-  @apply relative md:w-20 md:h-20 lg:w-24 lg:h-24 bg-cover border-0 hover:border-blue-900;
+  @apply relative md:w-24 md:h-24 bg-cover border-0 hover:border-blue-900;
 }
 .tile + .can-move:hover {
   @apply bg-yellow-500 cursor-pointer;
