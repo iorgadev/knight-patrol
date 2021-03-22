@@ -143,6 +143,8 @@ export default function Home() {
                 <h1 className="title">
                   <span className="mr-2 text-6xl lg:text-8xl">KNIGHT</span>
                   <img className="logo" src="./logo-3.png" />
+                  <br />
+                  PATROL
                 </h1>
               </div>
               <div className="score">
