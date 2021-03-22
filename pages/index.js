@@ -9,6 +9,10 @@ const getHardMode = () => {
   return parseInt(localStorage.getItem("hardmode"));
 };
 
+const getScreenShake = () => {
+  return parseInt(localStorage.getItem("screenshake"));
+};
+
 export default function Home() {
   const [currentGame, setCurrentGame] = useState(0);
   const [score, setScore] = useState(0);
@@ -18,6 +22,7 @@ export default function Home() {
   const updateSettings = () => {
     let options = {
       hardMode: getHardMode(),
+      screenShake: getScreenShake(),
     };
     setSettings(options);
   };
@@ -26,9 +31,12 @@ export default function Home() {
     //initial settings
     if (localStorage.getItem("hardmode") === null) {
       localStorage.setItem("hardmode", "0");
-      console.log("initial hard mode set off");
     }
-    setSettings({ hardMode: getHardMode() });
+    if (localStorage.getItem("screenshake") === null) {
+      localStorage.setItem("screenshake", "1");
+    }
+
+    setSettings({ hardMode: getHardMode(), screenShake: getScreenShake() });
     setHighScore(getHighScore());
   }, []);
 

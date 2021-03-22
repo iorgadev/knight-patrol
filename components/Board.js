@@ -77,7 +77,8 @@ const Board = ({ scoreChange, currentGame, options }) => {
             sleep(currentDelay).then(() => {
               playerIcon.style.transform = `translate(${
                 movePos.xMove * 96
-              }px, ${y * 96 * Math.sign(movePos.yMove)}px)`;
+              }px, ${y * 96 * Math.sign(movePos.yMove)}px) 
+              rotate(${10 * Math.sign(movePos.xMove)}deg)`;
 
               //register the player move
               if (y == Math.abs(movePos.yMove) && !finalDelay) {
@@ -209,7 +210,9 @@ const Board = ({ scoreChange, currentGame, options }) => {
   return (
     <div
       id="board"
-      className={`${styles.board} ${justMoved ? styles.shake : ``}`}
+      className={`${styles.board} ${
+        justMoved && options.screenShake ? styles.shake : ``
+      }`}
     >
       {board.map((e, pos) => drawSquare(pos))}
     </div>

@@ -12,26 +12,30 @@ const getHardMode = () => {
 
 const Menu = ({ newGame, updateSettings, highScore, settings }) => {
   const [menuOption, setMenuOption] = useState(0);
-  const [hardMode, setHardMode] = useState(0);
+  // const [hardMode, setHardMode] = useState(0);
 
   const toggleHardMode = () => {
     // let hard = getHardMode();
     let hard = settings.hardMode;
-    console.log("settings hard: ", settings.hardMode);
     if (hard) {
       localStorage.setItem("hardmode", "0");
-      setHardMode(0);
-      console.log("hardmode is: ", hard);
+      // setHardMode(0);
     } else {
       localStorage.setItem("hardmode", "1");
-      setHardMode(1);
-      console.log("hardmode is: ", hard);
+      // setHardMode(1);
     }
     updateSettings();
   };
 
+  const toggleScreenshake = () => {
+    let shake = settings.screenShake;
+    console.log(settings.screenShake);
+    localStorage.setItem("screenshake", shake ? "0" : "1");
+    updateSettings();
+  };
+
   useEffect(() => {
-    setHardMode(getHardMode());
+    // setHardMode(getHardMode());
   }, []);
 
   function toggleMenu(option = 0) {
@@ -85,29 +89,57 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
                 <img className="icon" src="./icons/altar.png" />
                 <span className="">Back</span>
               </button>
-              <span className="hidden text-5xl text-white uppercase lg:flex">
-                Settings
-              </span>
-              <button
-                className={`button ${settings.hardMode ? `` : `disabled`}`}
-                onClick={toggleHardMode}
-              >
-                <img className="icon" src="./icons/hard.png" />
-                <div className="flex flex-col items-start">
-                  <span className="name">Hard Mode</span>
-                  <span className="text-sm text-white">
-                    [{settings.hardMode ? `✔️` : `❌`}] hide possible moves
-                  </span>
-                </div>
-              </button>
-              <button className="button disabled">
-                <img className="icon" src="./icons/time.png" />
-                <span className="name">Hide Timer</span>
-              </button>
-              <button className="button disabled">
-                <img className="icon" src="./icons/startpos.png" />
-                <span className="name">Random Start</span>
-              </button>
+
+              <div className="flex flex-col items-start justify-center h-full text-5xl text-white uppercase bg-red-900 border-8 border-red-600 border-opacity-20 bg-opacity-30">
+                <span className="hidden mx-auto md:flex menu-title">
+                  Settings
+                </span>
+
+                {/* hard mode  */}
+                <button
+                  className={`button ${settings.hardMode ? `` : `disabled`}`}
+                  onClick={toggleHardMode}
+                >
+                  <img className="icon" src="./icons/hard.png" />
+                  <div className="flex flex-col items-start text-4xl">
+                    <span className="name">Hard Mode</span>
+                    <span className="text-sm text-white">
+                      [{settings.hardMode ? `✔️` : `❌`}] hide possible moves
+                    </span>
+                  </div>
+                </button>
+
+                {/* hide timer  */}
+                <button
+                  className={`button ${
+                    !settings.screenShake ? `disabled` : ``
+                  }`}
+                >
+                  <img className="icon" src="./icons/shake.png" />
+                  <div
+                    className="flex flex-col items-start text-4xl"
+                    onClick={toggleScreenshake}
+                  >
+                    <span className="name">Screenshake</span>
+                    <span className="text-sm text-white">
+                      [{settings.screenShake ? `✔️` : `❌`}] screenshake on
+                      player move
+                    </span>
+                  </div>
+                </button>
+
+                {/* random start pos  */}
+                <button className="button disabled">
+                  <img className="icon" src="./icons/startpos.png" />
+                  <div className="flex flex-col items-start text-4xl">
+                    <span className="name">Random Start</span>
+                    <span className="text-sm text-white">
+                      [{settings.randomStartPos ? `✔️` : `✔️`}] random start
+                      position
+                    </span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -122,11 +154,9 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
                 <span className="">Back</span>
               </button>
 
-              <div className="w-full space-y-2 ">
+              <div className="w-full h-full space-y-2 ">
                 <div className="flex flex-col items-center justify-center h-full text-5xl text-white uppercase bg-red-900 border-8 border-red-600 border-opacity-20 bg-opacity-30">
-                  <span className="text-5xl text-[#b4202a] uppercase">
-                    About Me
-                  </span>
+                  <span className="menu-title">About Me</span>
 
                   <div className="flex mt-4 space-x-2">
                     <img src="./adrian-pixel.png" className="w-20 h-20" />

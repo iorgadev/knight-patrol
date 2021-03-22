@@ -58,6 +58,10 @@
   @apply -translate-x-0;
 }
 
+.menu-title {
+  @apply text-5xl text-[#b4202a] uppercase;
+}
+
 .banner {
   filter: brightness(0.6);
   background-image: url("../public/banner.png");
@@ -78,7 +82,7 @@ button {
 }
 
 .button {
-  @apply relative flex items-center justify-start md:h-10 lg:h-16 md:p-0 lg:p-3 space-x-4 text-white transition-all duration-300 bg-black bg-opacity-10 hover:bg-opacity-20;
+  @apply relative flex items-center justify-start md:h-10 lg:h-16 md:p-0 lg:px-1 lg:py-3 space-x-4 text-white transition-all duration-300 bg-black bg-opacity-10 hover:bg-opacity-20;
 }
 .disabled {
   filter: grayscale(100%);
