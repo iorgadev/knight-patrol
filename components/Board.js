@@ -31,7 +31,7 @@ const Board = ({ scoreChange, currentGame, options }) => {
     if (gameID != currentGame) {
       setGameID(currentGame);
       scoreChange(0);
-      sleep(10).then(() => {
+      sleep(100).then(() => {
         setBoard(createBoard());
       });
     }
@@ -53,9 +53,9 @@ const Board = ({ scoreChange, currentGame, options }) => {
 
   const clicked = async (pos) => {
     if (isMoving) return;
-    setIsMoving(true);
     let movePos = canMove(pos);
     if (movePos.moveable) {
+      setIsMoving(true);
       let _board = board;
 
       //*bit* of a mess here, need to revisit.. but hey, it works!
