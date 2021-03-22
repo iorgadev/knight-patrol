@@ -51,6 +51,75 @@ const Board = ({ scoreChange, currentGame, options }) => {
     return _board;
   };
 
+  let square = (pos) => {
+    let lightTile = lightTiles[getRandomInt(3) - 1];
+    let darkTile = darkTiles[getRandomInt(3) - 1];
+    return {
+      x: getXY(pos).x,
+      y: getXY(pos).y,
+      pos: pos,
+      light: isLightSquare(pos),
+      selected: pos - 1 == player,
+      visited: pos - 1 == player,
+      active: pos == player + 1,
+      justMovedThrough: false,
+      tile: isLightSquare(pos) ? darkTile : lightTile,
+    };
+  };
+
+  //turn a 1-64 position into X,Y coords
+  const getXY = (i) => {
+    return {
+      x: i % 8,
+      y: Math.floor(i / 8),
+    };
+  };
+
+  const getPos = ({ x, y }) => {
+    return x + y * 8;
+  };
+
+  //get Valid Bounds for possible moves
+  const validBounds = ({ x, y }) => {
+    return x >= 0 && x <= 7 && y >= 0 && y <= 7;
+  };
+
+  //for checkered pattern of a chessboard
+  const isLightSquare = (pos) => getXY(pos).x % 2 == getXY(pos).y % 2;
+
+  //if current square is selected by user
+  const isSelected = (pos) => board[pos].selected;
+
+  // can move
+  let h = [2, 1, -1, -2, -2, -1, 1, 2];
+  let v = [-1, -2, -2, -1, 1, 2, 2, 1];
+  let moves = [-6, -15, -17, -10, 6, 15, 17, 10];
+  const canMove = (pos) => {
+    let moveable = false;
+    let movePos;
+    let move = { x: 0, y: 0, xAbs: 0, yAbs: 0 };
+
+    let xy = getXY(player);
+    for (let i = 0; i < 8; i++) {
+      movePos = player + moves[i];
+
+      if (
+        movePos == pos &&
+        validBounds({ x: xy.x + h[i], y: xy.y + v[i] }) &&
+        !board[pos].visited
+      ) {
+        moveable = true;
+        move.x = h[i];
+        move.y = v[i];
+      }
+    }
+    return {
+      moveable: moveable,
+      xMove: move.x,
+      yMove: move.y,
+    };
+  };
+
   const clicked = async (pos) => {
     if (isMoving) return;
     let movePos = canMove(pos);
@@ -104,40 +173,23 @@ const Board = ({ scoreChange, currentGame, options }) => {
     }
   };
 
-  // can move
-  let h = [2, 1, -1, -2, -2, -1, 1, 2];
-  let v = [-1, -2, -2, -1, 1, 2, 2, 1];
-  let moves = [-6, -15, -17, -10, 6, 15, 17, 10];
-  const canMove = (pos) => {
-    let moveable = false;
-    let movePos;
-    let move = { x: 0, y: 0, xAbs: 0, yAbs: 0 };
-
-    let xy = getXY(player);
-    for (let i = 0; i < 8; i++) {
-      movePos = player + moves[i];
-
-      if (
-        movePos == pos &&
-        validBounds({ x: xy.x + h[i], y: xy.y + v[i] }) &&
-        !board[pos].visited
-      ) {
-        moveable = true;
-        move.x = h[i];
-        move.y = v[i];
-      }
-    }
-    return {
-      moveable: moveable,
-      xMove: move.x,
-      yMove: move.y,
-    };
-  };
-
   let lightTiles = [1, 3, 5];
   let darkTiles = [2, 6, 7];
 
   const drawSquare = (pos) => {
+    let moveData = canMove(pos);
+
+    if (pos === 0 && possibleMoves != 0) {
+      setPossibleMoves(0);
+      console.log(pos);
+    }
+    // if (moveData.moveable) setPossibleMoves(possibleMoves + 1);
+
+    // if (pos === 64) {
+    //   //possible moves total, last tile?
+    //   console.log(possibleMoves);
+    // }
+
     return (
       <div
         id={pos}
@@ -148,11 +200,7 @@ const Board = ({ scoreChange, currentGame, options }) => {
         className={
           styles.tile +
           ` flex items-center justify-center
-            ${
-              canMove(pos).moveable && !options.hardMode
-                ? styles["can-move"]
-                : ` `
-            }
+            ${moveData.moveable && !options.hardMode ? styles["can-move"] : ` `}
             ${board[pos].visited ? styles["visited"] : ` `}
             ${isLightSquare(pos) ? styles["tile-light"] : styles["tile-dark"]}`
         }
@@ -167,45 +215,6 @@ const Board = ({ scoreChange, currentGame, options }) => {
       </div>
     );
   };
-
-  let square = (pos) => {
-    let lightTile = lightTiles[getRandomInt(3) - 1];
-    let darkTile = darkTiles[getRandomInt(3) - 1];
-    return {
-      x: getXY(pos).x,
-      y: getXY(pos).y,
-      pos: pos,
-      light: isLightSquare(pos),
-      selected: pos - 1 == player,
-      visited: pos - 1 == player,
-      active: pos == player + 1,
-      justMovedThrough: false,
-      tile: isLightSquare(pos) ? darkTile : lightTile,
-    };
-  };
-
-  //turn a 1-64 position into X,Y coords
-  const getXY = (i) => {
-    return {
-      x: i % 8,
-      y: Math.floor(i / 8),
-    };
-  };
-
-  const getPos = ({ x, y }) => {
-    return x + y * 8;
-  };
-
-  //get Valid Bounds for possible moves
-  const validBounds = ({ x, y }) => {
-    return x >= 0 && x <= 7 && y >= 0 && y <= 7;
-  };
-
-  //for checkered pattern of a chessboard
-  const isLightSquare = (pos) => getXY(pos).x % 2 == getXY(pos).y % 2;
-
-  //if current square is selected by user
-  const isSelected = (pos) => board[pos].selected;
 
   return (
     <div
