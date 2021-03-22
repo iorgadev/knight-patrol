@@ -47,6 +47,8 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
   }
 
   function backToMain() {
+    let main = document.getElementById("menu-0");
+    main.classList.remove("main-menu-close");
     let menu = document.getElementById("menu-" + menuOption);
     menu.classList.remove("slide-menu");
     sleep(500).then(() => {
@@ -58,7 +60,10 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
     <>
       <div className="menu-container">
         <div className="menu">
-          <div id="menu-0" className={menuOption == 0 ? `menu-1` : `menu-1`}>
+          <div
+            id="menu-0"
+            className={menuOption == 0 ? `menu-1` : `menu-1 main-menu-close`}
+          >
             <div className="flex flex-col px-2 space-y-1 lg:py-5 lg:space-y-5">
               <button className="new-game button" onClick={newGame}>
                 <img className="icon" src="./player.png" />
@@ -148,22 +153,24 @@ const Menu = ({ newGame, updateSettings, highScore, settings }) => {
             id="menu-2"
             className={menuOption == 2 ? `menu-1 slide-menu` : `hidden`}
           >
-            <div className="flex flex-col w-full px-2 py-5 space-y-1">
+            <div className="flex flex-col w-full h-full px-2 py-5 space-y-1">
               <button className="go-back button" onClick={backToMain}>
                 <img className="icon" src="./icons/altar.png" />
                 <span className="">Back</span>
               </button>
 
-              <div className="w-full h-full space-y-2 ">
+              <div className="w-auto h-full space-y-2 ">
                 <div className="flex flex-col items-center justify-center h-full text-5xl text-white uppercase bg-red-900 border-8 border-red-600 border-opacity-20 bg-opacity-30">
                   <span className="menu-title">About Me</span>
 
-                  <div className="flex mt-4 space-x-2">
+                  <div className="flex space-x-2">
                     <img src="./adrian-pixel.png" className="w-20 h-20" />
-                    <div className="flex flex-col text-white">
-                      <span className="text-2xl">Adrian Iorga</span>
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="text-2xl leading-3">Adrian Iorga</span>
                       <span className="text-lg">Full Stack Dev</span>
                     </div>
+                    {/* <div className="flex flex-col text-white">
+                    </div> */}
                   </div>
                 </div>
               </div>

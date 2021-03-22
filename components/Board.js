@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Board.module.css";
-// import knight from "../public/knight.svg";
+import Menu from "../components/Menu";
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max)) + 1;
@@ -17,9 +17,11 @@ const Board = ({ scoreChange, currentGame, options }) => {
   const [justMoved, setJustMoved] = useState(false);
   const [gameID, setGameID] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
-  const [possibleMoves, setPossibleMoves] = useState(0);
+  const [possibleMoves, setPossibleMoves] = useState(8);
+  const [menuOpened, setMenuOpened] = useState(false);
 
   useEffect(() => {
+    //start new game
     setGameID(1);
   }, []);
 
@@ -31,11 +33,53 @@ const Board = ({ scoreChange, currentGame, options }) => {
     if (gameID != currentGame) {
       setGameID(currentGame);
       scoreChange(0);
+      setPossibleMoves(movesAllowed());
       sleep(100).then(() => {
         setBoard(createBoard());
+        sleep(100).then(() => {
+          for (let i = 0; i < 64; i++) {
+            let sq = document.getElementById(i);
+            sq.style.transform = "none";
+          }
+        });
       });
+    } else {
+      setPossibleMoves(movesAllowed());
     }
   }, [player]);
+
+  useEffect(() => {
+    // if (board.length > 0)
+    //   for (let i = 0; i < 64; i++) {
+    //     let sq = document.getElementById(i);
+    //     sq.style.transform = "translateY(0%) translateX(0%)";
+    //   }
+  }, [board]);
+
+  useEffect(() => {
+    if (board.length > 0 && possibleMoves === 0) {
+      //game over here
+      //
+      //
+      let sq = document.getElementById(player);
+      sq.style.transform = "translateY(200%)";
+      // let menuWidth = 4;
+      // let menuHeight = 6;
+      // for (let x = 0; x < menuWidth; x++) {
+      //   for (let y = 0; y < menuHeight; y++) {
+      //     sleep((x + y) * 50).then(() => {
+      //       let sq = document.getElementById(10 + x + y * 8);
+      //       sq.style.transform = "translateY(600%)";
+      //       console.log("moved sq: ", 24 + x + y * 8);
+      //     });
+      //   }
+      // }
+    }
+  }, [possibleMoves]);
+
+  const toggleMenu = () => {
+    setMenu;
+  };
 
   //create board
   const createBoard = () => {
@@ -94,6 +138,13 @@ const Board = ({ scoreChange, currentGame, options }) => {
   let h = [2, 1, -1, -2, -2, -1, 1, 2];
   let v = [-1, -2, -2, -1, 1, 2, 2, 1];
   let moves = [-6, -15, -17, -10, 6, 15, 17, 10];
+  const movesAllowed = () => {
+    let count = 0;
+    if (board.length > 0)
+      for (let i = 0; i < 64; i++) if (canMove(i).moveable) count++;
+    return count;
+  };
+
   const canMove = (pos) => {
     let moveable = false;
     let movePos;
@@ -111,6 +162,7 @@ const Board = ({ scoreChange, currentGame, options }) => {
         moveable = true;
         move.x = h[i];
         move.y = v[i];
+        break;
       }
     }
     return {
@@ -120,10 +172,13 @@ const Board = ({ scoreChange, currentGame, options }) => {
     };
   };
 
-  const clicked = async (pos) => {
+  const clicked = (pos) => {
+    //testing movesALlowed
+    // console.log(possibleMoves);
     if (isMoving) return;
     let movePos = canMove(pos);
     if (movePos.moveable) {
+      // setPossibleMoves(movesAllowed());
       setIsMoving(true);
       let _board = board;
 
@@ -157,12 +212,14 @@ const Board = ({ scoreChange, currentGame, options }) => {
                   _board[player].active = false;
                   _board[pos].active = true;
                   _board[pos].visited = true;
+                  // _board[pos].canMove = true;
                   setPlayer(pos);
                   setBoard(_board);
                   scoreChange(1);
                   sleep(delay).then(() => {
                     setJustMoved(false);
                     setIsMoving(false);
+                    // setPossibleMoves(movesAllowed(pos));
                   });
                 });
               } //end setting player movement
@@ -178,17 +235,6 @@ const Board = ({ scoreChange, currentGame, options }) => {
 
   const drawSquare = (pos) => {
     let moveData = canMove(pos);
-
-    if (pos === 0 && possibleMoves != 0) {
-      setPossibleMoves(0);
-      console.log(pos);
-    }
-    // if (moveData.moveable) setPossibleMoves(possibleMoves + 1);
-
-    // if (pos === 64) {
-    //   //possible moves total, last tile?
-    //   console.log(possibleMoves);
-    // }
 
     return (
       <div
@@ -217,14 +263,16 @@ const Board = ({ scoreChange, currentGame, options }) => {
   };
 
   return (
-    <div
-      id="board"
-      className={`${styles.board} ${
-        justMoved && options.screenShake ? styles.shake : ``
-      }`}
-    >
-      {board.map((e, pos) => drawSquare(pos))}
-    </div>
+    <>
+      <div
+        id="board"
+        className={`${styles.board} ${
+          justMoved && options.screenShake ? styles.shake : ``
+        }`}
+      >
+        {board.map((e, pos) => drawSquare(pos))}
+      </div>
+    </>
   );
 };
 

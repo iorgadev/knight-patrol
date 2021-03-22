@@ -18,6 +18,7 @@ export default function Home() {
   const [score, setScore] = useState(0);
   const [settings, setSettings] = useState({});
   const [highScore, setHighScore] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const updateSettings = () => {
     let options = {
@@ -55,7 +56,12 @@ export default function Home() {
       : 0;
   }
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   //check ls for highscore
+  //
   useEffect(() => {
     let currentHighScore = getHighScore();
     //if exists, is ls hs > current score, set it
@@ -78,7 +84,12 @@ export default function Home() {
         <meta name="author" content="Adrian Iorga" />
         <meta property="og:image" content="/knight-patrol-thumb2.png" />
       </Head>
+
       <div className="main">
+        {/* <div className="text-xl text-white">
+          New Game | About Me | Settings |{" "}
+          <span onClick={toggleMenu}>Menu</span>
+        </div> */}
         <div className="flex flex-col lg:flex-row lg:space-x-10">
           {/* make the board */}
           <div className="flex items-center justify-center">
@@ -89,12 +100,39 @@ export default function Home() {
                 Please check again on tablet or desktop devices.
               </h1>
             </div>
-            <div className="hidden md:flex md:p-0 lg:p-10 board-container">
+            <div className="items-center justify-center hidden md:flex md:p-0 lg:p-10 board-container">
               <Board
                 scoreChange={updateScore}
                 currentGame={currentGame}
                 options={settings}
+                menuOpen={menuOpen}
+                toggleMenu={setMenuOpen}
               />
+
+              {/* display menu inside board  */}
+              {/* <div
+                className={
+                  (menuOpen ? `flex` : `hidden`) +
+                  ` absolute z-30 flex-col items-center justify-center space-y-2 md:flex-row lg:flex-col`
+                }
+              >
+                <div className="flex flex-col">
+                  <div className="flex flex-col items-center justify-center flex-none lg:w-full whitespace-nowrap">
+                    <h1 className="title">
+                      <span className="mr-2 text-6xl lg:text-8xl">KNIGHT</span>
+                      <img className="logo" src="./logo-3.png" />
+                    </h1>
+                  </div>
+                </div>
+                <Menu
+                  newGame={newGame}
+                  updateSettings={updateSettings}
+                  highScore={highScore}
+                  settings={settings}
+                  menuOpen={menuOpen}
+                  toggleMenu={setMenuOpen}
+                />
+              </div> */}
             </div>
           </div>
 
@@ -105,8 +143,6 @@ export default function Home() {
                 <h1 className="title">
                   <span className="mr-2 text-6xl lg:text-8xl">KNIGHT</span>
                   <img className="logo" src="./logo-3.png" />
-                  <br />
-                  PATROL
                 </h1>
               </div>
               <div className="score">

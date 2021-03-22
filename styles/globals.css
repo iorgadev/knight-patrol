@@ -21,7 +21,7 @@
   background-size: 10%;
   background-blend-mode: overlay;
   box-shadow: inset 0 0 100px 55px #000000;
-  @apply flex flex-col items-center justify-center w-full h-screen space-y-10 bg-gray-800;
+  @apply flex flex-col items-center justify-center w-full h-screen bg-gray-800;
 }
 .board-container {
   image-rendering: pixelated;
@@ -37,25 +37,25 @@
 }
 
 .menu {
-  @apply flex transition-all duration-300 transform;
+  @apply flex transition-all duration-300 transform w-full;
 }
 .menu-1 {
   image-rendering: pixelated;
-  background-image: url("../public/tiles/wall_mid.png");
+  /* background-image: url("../public/tiles/wall_mid.png"); */
   background-size: 100%;
   background-blend-mode: overlay;
-  box-shadow: inset 0 0 25px #0f0f0f, 4px 4px 20px #000000;
+  /* box-shadow: inset 0 0 25px #0f0f0f, 4px 4px 20px #000000; */
   @apply flex overflow-hidden flex-none
-  font-sans text-3xl w-80
-  bg-[#0f0f0f] border-[1rem] border-[#040405]
+  font-sans text-3xl w-full
+  /* bg-[#0f0f0f] */
   transition-all transform duration-300 translate-x-0;
 }
 
 .slide-menu {
   @apply -translate-x-80;
 }
-.about-menu {
-  @apply -translate-x-0;
+.main-menu-close {
+  @apply translate-x-80;
 }
 
 .menu-title {
@@ -88,7 +88,7 @@ button {
   filter: grayscale(100%);
 }
 .button > .icon {
-  @apply w-10 h-10 transition-all duration-100 hover:w-14 hover:h-14;
+  @apply w-14 h-14 transition-all duration-100 hover:w-14 hover:h-14;
 }
 .button > .name {
   @apply text-4xl transition-all duration-100 text-[#f4d29c];
@@ -98,7 +98,7 @@ button {
 }
 
 .button:hover > .icon {
-  @apply w-12 h-12;
+  @apply w-16 h-16;
 }
 .new-game {
   text-shadow: 2px 2px 0px #74030a;

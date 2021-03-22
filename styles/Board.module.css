@@ -1,5 +1,5 @@
 .board {
-  @apply grid w-auto grid-cols-8 gap-0 bg-gray-900 relative transition-all duration-300;
+  @apply relative z-40 grid w-auto grid-cols-8 gap-0 overflow-hidden transition-all duration-300;
 }
 
 .shake {
@@ -34,12 +34,26 @@
   }
 }
 
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-4px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
 .tile {
+  /* z-index: 10; */
+  /* animation: float 1s infinite; */
   image-rendering: pixelated;
-  @apply relative md:w-24 md:h-24 bg-cover border-0 hover:border-blue-900;
+  @apply relative transition-all duration-1000 bg-cover md:w-24 md:h-24;
 }
 .tile + .can-move:hover {
-  @apply bg-yellow-500 cursor-pointer;
+  @apply transition-all duration-200 bg-yellow-500 cursor-pointer;
 }
 
 .tile-light {
@@ -70,8 +84,8 @@
 .player {
   z-index: 40;
   image-rendering: pixelated;
-  /* @apply w-[48px] h-[84px]; */
-  @apply w-full h-full p-3 relative transition-all duration-300;
+  filter: drop-shadow(5px -5px 0px #1a1a1a) sepia(100%);
+  @apply relative w-full h-full p-3 transition-all duration-300;
 }
 
 .num {
