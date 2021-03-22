@@ -74,7 +74,14 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row lg:space-x-10">
           {/* make the board */}
           <div className="flex items-center justify-center">
-            <div className="md:p-0 lg:p-10 board-container">
+            <div className="flex md:hidden">
+              <h1 className="text-white">
+                Unfortunately mobile support not available at the moment.
+                <br />
+                Please check again on tablet or desktop devices.
+              </h1>
+            </div>
+            <div className="hidden md:flex md:p-0 lg:p-10 board-container">
               <Board
                 scoreChange={updateScore}
                 currentGame={currentGame}
@@ -84,7 +91,7 @@ export default function Home() {
           </div>
 
           {/* menu */}
-          <div className="flex items-center justify-center space-y-2 lg:flex-col">
+          <div className="flex flex-col items-center justify-center space-y-2 md:flex-row lg:flex-col">
             <div className="flex flex-col">
               <div className="flex flex-col items-center justify-center flex-none mb-10 lg:w-full whitespace-nowrap">
                 <h1 className="title">
