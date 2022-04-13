@@ -21,7 +21,3 @@ yarn dev
 ## Contributors Welcome
 
 If you are interested in contributing to this project with bug fixes, features, or code refactors, feel free to fork and make any pull requests.
-
-```
-
-```
